@@ -1,6 +1,9 @@
 import"./ContacForm.css"
 import Button from '../../components/Button/Button'
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
+
+//CONTEXT
+import { AppConstext } from '../../contexts/AppContext'
 
 function ContacForm (){
     const [FormData,setFormData] = useState({
@@ -63,23 +66,25 @@ function ContacForm (){
         })
     }
 
+    const appConstext = useContext(AppConstext)
+
     return(
                 <div className="contact-form d-flex fd-column al-center">
-                    <h2>We love meeting new people and helping them.</h2>
+                    <h2>{appConstext.languages[appConstext.language].contact.title}</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="d-flex form-group">
                             <input className="form-input"
                             type="text" 
                             id="name"
                             name="name"
-                            placeholder="Name *"
+                            placeholder={appConstext.languages[appConstext.language].contact.pl1}
                             onChange={handleChange}
                         />
                         <input className="form-input"
                             type="email" 
                             id="email"
                             name="email"
-                            placeholder="Email *"
+                            placeholder={appConstext.languages[appConstext.language].contact.pl2}
                             onChange={handleChange}
                         />
                         </div>
@@ -88,15 +93,15 @@ function ContacForm (){
                             className="form-input"
                             id="message"
                             name="message"
-                            placeholder="Message *"
+                            placeholder={appConstext.languages[appConstext.language].contact.pl3}
                             onChange={handleChange}
                             rows="4"
                         ></textarea>
                         </div>
                         <div className="al-center d-flex jc-end form-group ">
-                            {formSubmitted && <p className="text-primary">Sucesso</p>}
+                            {formSubmitted && <p className="text-primary">{appConstext.languages[appConstext.language].contact.successMsg}</p>}
                             <Button type="submit" buttonStyle="secondary" disabled={!isFormValid || formSubmitLoading}>
-                                Enviar
+                            {appConstext.languages[appConstext.language].general.send}
                             </Button>
                         </div>
                     </form>

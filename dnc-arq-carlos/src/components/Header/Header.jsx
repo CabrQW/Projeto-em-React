@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 
 
 //ASSETS
@@ -8,12 +8,17 @@ import Logo from '../../assets/dnc-logo.svg'
 
 //Components
 import Button from '../Button/Button'
- 
+
+//CONTEXT
+import { AppConstext } from '../../contexts/AppContext'
+
 function Header(){
     const [isOpne,setIsOpen] = useState(false)
     const toggleMenu = () =>{
         setIsOpen(!isOpne)
     }
+    const appConstext = useContext(AppConstext)
+
     return(
         <header>
             <div className="container">
@@ -29,10 +34,10 @@ function Header(){
                             X
                         </Button>
                     <ul className="d-flex">
-                        <li><Link to="/">Home</Link></li>
-                        <li><Link to="/about">About</Link></li>
-                        <li><Link to="/projects">Projects</Link></li>
-                        <li><Link to="/contact">Contact</Link></li>
+                        <li><Link to="/">{appConstext.languages[appConstext.language].menu.home} </Link></li>
+                        <li><Link to="/about">{appConstext.languages[appConstext.language].menu.about} </Link></li>
+                        <li><Link to="/projects">{appConstext.languages[appConstext.language].menu.projects} </Link></li>
+                        <li><Link to="/contact">{appConstext.languages[appConstext.language].menu.contact} </Link></li>
                     </ul>
                 </nav>
                 </div>
