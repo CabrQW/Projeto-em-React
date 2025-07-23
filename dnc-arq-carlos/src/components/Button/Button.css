@@ -52,3 +52,7 @@
     color: #666;
     pointer-events: none;
 }
+
+.unstyled{
+    background-color: white;
+}

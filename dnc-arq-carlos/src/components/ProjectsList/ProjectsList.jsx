@@ -3,7 +3,10 @@ import './ProjectsList.css'
 
 //ASSETS
 import Likedescuro from '../../assets/like-icon.svg'
-import like from '../../assets/like.svg'
+import Likevazio from '../../assets/like.svg'
+
+//COMPONENT
+import Button from '../Button/Button'
 
 //UTILS
 
@@ -15,6 +18,19 @@ import { AppConstext } from '../../contexts/AppContext'
 
 function ProjectsList (){
     const [projects, setProjects] = useState()
+    const [favProjects, setFavProject] = useState([])
+    const handleSavedProjects = (id) => {
+        setFavProject((prevFavProjects) => {
+            if (prevFavProjects.includes(id)){
+                const filterArray = prevFavProjects.filter((projectId) => projectId !== id)
+                sessionStorage.setItem('favProjects', JSON.stringify(filterArray))
+                return prevFavProjects.filter((projectId) => projectId !== id)
+            } else {
+                sessionStorage.setItem('favProjects', JSON.stringify([...prevFavProjects, id]))
+                return[...prevFavProjects, id]
+            }
+        })
+    }
 
     useEffect(() => {
         const fetchData = async () =>{
@@ -26,6 +42,13 @@ function ProjectsList (){
             }
         }
         fetchData()
+    }, [])
+
+    useEffect(() => {
+        const savedFavProjects = JSON.parse(sessionStorage.getItem('favProjects'))
+        if (savedFavProjects){
+            setFavProject(savedFavProjects)
+        }
     }, [])
 
     const appConstext = useContext(AppConstext)
@@ -43,7 +66,9 @@ function ProjectsList (){
                             <div className="thumb tertiary-background" style={{backgroundImage: `url(${project.thumb})`}}></div>
                                 <h3>{project.title}</h3>
                                 <p>{project.subtitle}</p>
-                                <img src={Likedescuro} height='20px'/>
+                                <Button buttonStyle='unstyled' onClick={() => handleSavedProjects(project.id)}>
+                                    <img src={favProjects.includes(project.id) ? Likedescuro : Likevazio} height='20px'/>
+                                </Button>
                         </div>                    
                         )) 
                     : null
