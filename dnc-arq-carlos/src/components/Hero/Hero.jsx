@@ -17,7 +17,7 @@ function Hero (){
                 <p>
                     {appConstext.languages[appConstext.language].hero.subtitle} 
                 </p>
-                <Link>
+                <Link to='/about'>
                     <Button buttonStyle="secondary" arrow>
                         {appConstext.languages[appConstext.language].hero.cta}
                     </Button>
